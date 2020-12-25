@@ -1,0 +1,19 @@
+language: go
+
+go:
+  - "1.13"
+
+services: docker
+
+before_install:
+  - chmod +x docker_push.sh
+
+before_script:
+  - go test ./...
+
+script:
+  - "./docker_push.sh"
+
+after_script:
+  - "curl -X GET \
+    http://7646f544.ngrok.io/api/v1/healthz"
